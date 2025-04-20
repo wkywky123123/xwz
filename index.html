@@ -4,121 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生日贺卡</title>
-    <style>
-        /* 预加载样式 */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff5f5;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s;
-        }
-        .progress-bar {
-            width: 70%;
-            height: 12px;
-            background: #ffe6e6;
-            border-radius: 6px;
-        }
-        .progress {
-            width: 0%;
-            height: 100%;
-            background: #ff6b6b;
-            transition: width 0.3s;
-            border-radius: 6px;
-        }
-
-        /* 整体布局 */
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Comic Sans MS', cursive;
-        }
-        .page-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-        }
-        .page {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
-        }
-
-        /* 内容容器 */
-        .content {
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-        }
-
-        /* 翻页动画 */
-        .page:not(.active) { transform: translateY(100%); }
-        .page.active { transform: translateY(0); }
-        .page.exit { transform: translateY(-100%); }
-
-        /* 第一页淡入 */
-        #page1 { opacity: 0; }
-        #page1.active {
-            animation: pageFadeIn 1s ease-out forwards;
-        }
-        @keyframes pageFadeIn { to { opacity: 1; } }
-
-        /* 逐行居中动画 */
-        .text-line {
-            opacity: 0;
-            transform: translateX(-50px);
-            margin: 10px 0;
-        }
-        .text-line:nth-child(even) {
-            transform: translateX(50px);
-        }
-        .animate .text-line {
-            animation: textSlideIn 0.8s ease-out forwards;
-        }
-        @keyframes textSlideIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* 图片动画 */
-        .falling-img {
-            width: min(150px, 30vw);
-            margin: 20px 0;
-            animation: floatIn 2s ease-out forwards;
-        }
-        @keyframes floatIn {
-            from { transform: translateX(100vw) rotate(15deg); opacity: 0; }
-            to { transform: translateX(0) rotate(0); opacity: 1; }
-        }
-
-        /* 最终页样式 */
-        #page5 { font-size: 2em; }
-        #signature {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            color: #666;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- 预加载 -->
@@ -130,7 +16,7 @@
 
     <!-- 页面容器 -->
     <div class="page-container">
-        <!-- 页面内容 -->
+        <!-- 第1页 -->
         <div class="page" id="page1">
             <div class="content">
                 <h2>祝贺葛静雯同学！</h2>
@@ -146,35 +32,39 @@
             </div>
         </div>
 
+        <!-- 第2页 -->
         <div class="page" id="page2">
             <div class="content">
                 <p class="text-line">对了对了！</p>
                 <p class="text-line">这个【永远不会翻的小船】送给你</p>
-                <img src="boat.png" class="falling-img">
+                <img src="images/boat.png" class="falling-img">
             </div>
         </div>
 
+        <!-- 第3页 -->
         <div class="page" id="page3">
             <div class="content">
                 <p class="text-line">还有这个</p>
-                <img src="gift.png" class="falling-img">
+                <img src="images/gift.png" class="falling-img">
                 <p class="text-line">哪怕考不上也可以带着过过瘾嘛</p>
                 <p class="text-line">据说带着考试会有分数加成哦~</p>
             </div>
         </div>
 
+        <!-- 第4页 -->
         <div class="page" id="page4">
             <div class="content">
                 <p class="text-line">马上就要高考了</p>
-                <p class="text-line" style="color: #ff6b6b; font-size: 1.3em;">高考要加油哦</p>
+                <p class="text-line highlight">高考要加油哦</p>
                 <p class="text-line">暑假有空来玩</p>
-                <p class="text-line" style="font-weight: bold;">一定要来！</p>
+                <p class="text-line emphasis">一定要来！</p>
             </div>
         </div>
 
+        <!-- 第5页 -->
         <div class="page" id="page5">
             <div class="content">
-                <div>🎂 生日快乐！ 🎉</div>
+                <div class="birthday-text">🎂 生日快乐！ 🎉</div>
                 <div id="signature">—— 王凯扬</div>
             </div>
         </div>
@@ -182,58 +72,9 @@
 
     <!-- 背景音乐 -->
     <audio id="bgm">
-        <source src="happy-bgm.mp3" type="audio/mpeg">
+        <source src="audio/happy-bgm.mp3" type="audio/mpeg">
     </audio>
 
-    <script>
-        // ========== 预加载系统 ==========
-        const resources = ['boat.png', 'gift.png', 'happy-bgm.mp3'];
-        const progress = document.querySelector('.progress');
-        const preloader = document.getElementById('preloader');
-
-        let loaded = 0;
-        resources.forEach(url => {
-            const res = url.endsWith('.mp3') ? new Audio() : new Image();
-            res.onload = res.onerror = () => {
-                loaded++;
-                progress.style.width = (loaded/resources.length*100) + '%';
-                if(loaded === resources.length) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.remove();
-                        initPages();
-                    }, 500);
-                }
-            };
-            res.src = url;
-        });
-
-        // ========== 页面控制系统 ==========
-        const pages = document.querySelectorAll('.page');
-        let currentPage = 0;
-
-        function initPages() {
-            pages[0].classList.add('active');
-            document.body.addEventListener('click', handleClick);
-        }
-
-        function handleClick() {
-            if(currentPage === 0) document.getElementById('bgm').play();
-            
-            if(currentPage < pages.length - 1) {
-                pages[currentPage].classList.add('exit');
-                currentPage++;
-                pages[currentPage].classList.add('active');
-                
-                setTimeout(() => {
-                    pages[currentPage].classList.add('animate');
-                    const textLines = pages[currentPage].querySelectorAll('.text-line');
-                    textLines.forEach((line, index) => {
-                        line.style.animationDelay = `${index*0.2}s`;
-                    });
-                }, 300);
-            }
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
