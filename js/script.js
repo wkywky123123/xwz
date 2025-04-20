@@ -25,16 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         res.src = url;
     });
 
-    // 触发文字动画
-    setTimeout(() => {
-        pages[currentPage].classList.add('animate');
-        const textLines = pages[currentPage].querySelectorAll('.text-line');
-        textLines.forEach((line, index) => {
-            line.style.animationDelay = `${index*0.2}s`;
-        });
-    }, 300);
-}
-
     // 页面控制系统
     const pages = document.querySelectorAll('.page');
     let currentPage = 0;
