@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resources = [
         'images/boat.png',
         'images/gift.png',
-        
+        'audio/happy-bgm.mp3'
     ];
     const progress = document.querySelector('.progress');
     const preloader = document.getElementById('preloader');
