@@ -25,45 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         res.src = url;
     });
 
-    // 在预加载完成后添加
-let isMusicPlaying = false;
-const musicBtn = document.getElementById('musicBtn');
-const bgm = document.getElementById('bgm');
-
-// 音乐控制功能
-function toggleMusic() {
-    isMusicPlaying = !isMusicPlaying;
-    musicBtn.innerHTML = isMusicPlaying ? '⏸️ 暂停' : '▶️ 播放';
-    musicBtn.classList.toggle('playing', isMusicPlaying);
-    
-    if (isMusicPlaying) {
-        bgm.play().catch(() => {
-            // 处理自动播放被阻止的情况
-            musicBtn.textContent = '▶️ 点击播放';
-            isMusicPlaying = false;
-        });
-    } else {
-        bgm.pause();
-    }
-}
-
-// 初始化音乐按钮
-musicBtn.addEventListener('click', toggleMusic);
-
-// 移除原来的首次点击播放逻辑，修改为：
-function handleClick() {
-    if (currentPage === 0) {
-        // 如果是第一页点击，仅翻页不控制音乐
-        pages[currentPage].classList.add('exit');
-        currentPage++;
-        pages[currentPage].classList.add('active');
-    } else if (currentPage < pages.length - 1) {
-        // 其他页正常翻页
-        pages[currentPage].classList.add('exit');
-        currentPage++;
-        pages[currentPage].classList.add('active');
-    }
-    
     // 触发文字动画
     setTimeout(() => {
         pages[currentPage].classList.add('animate');
