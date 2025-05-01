@@ -249,3 +249,39 @@ body {
     50% { transform: scale(1.2); }
     100% { transform: scale(0.8); }
 }
+
+/* 特色文字效果 */
+.scroll-text p {
+  animation: scrollUp 8s infinite;
+  opacity: 0;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(-30px); opacity: 0; }
+}
+
+.jump {
+  display: inline-block;
+  animation: jump 0.8s ease infinite alternate;
+}
+
+@keyframes jump {
+  to { transform: translateY(-15px); }
+}
+
+.bless-bubble {
+  background: rgba(255,255,255,0.9);
+  padding: 15px;
+  border-radius: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.small-text {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 10px;
+}
