@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resources = [
         'images/boat.png',
         'images/gift.png',
-        'audio/bgm.mp3'
     ];
 
     // 预加载系统
