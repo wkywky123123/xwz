@@ -3,12 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 0;
     let isScrolling = false;
     let isMusicPlaying = false;
+    let lastClickTime = 0;
+    const CLICK_COOLDOWN = 800;
+    const SWIPE_THRESHOLD = 50;
     const pages = document.querySelectorAll('.page');
     const bgm = document.getElementById('bgm');
     const dots = document.querySelectorAll('.page-dot');
     const resources = [
         'images/boat.png',
         'images/gift.png',
+        'audio/bgm.mp3'
     ];
 
     // 预加载系统
@@ -32,25 +36,67 @@ document.addEventListener('DOMContentLoaded', () => {
         res.src = url;
     });
 
-    // 音乐控制功能
+    // 创建音乐控制按钮
     const musicBtn = document.createElement('button');
     musicBtn.id = 'musicBtn';
     musicBtn.className = 'music-control';
     musicBtn.innerHTML = '🎵 播放';
     document.body.appendChild(musicBtn);
 
-    const toggleMusic = () => {
+    // 音乐控制功能
+    const toggleMusic = (e) => {
+        if(e) e.stopPropagation();
         isMusicPlaying = !isMusicPlaying;
         musicBtn.innerHTML = isMusicPlaying ? '⏸️ 暂停' : '▶️ 播放';
         musicBtn.classList.toggle('playing', isMusicPlaying);
-        isMusicPlaying ? bgm.play().catch(() => {
-            musicBtn.textContent = '▶️ 点击播放';
-            isMusicPlaying = false;
-        }) : bgm.pause();
+        if(isMusicPlaying) {
+            bgm.play().catch(() => {
+                musicBtn.textContent = '▶️ 点击播放';
+                isMusicPlaying = false;
+            });
+        } else {
+            bgm.pause();
+        }
     };
-    musicBtn.addEventListener('click', toggleMusic);
 
-    // 页面控制系统
+    // 事件监听
+    musicBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMusic(e);
+    });
+
+    // 全局点击处理
+    document.addEventListener('click', (e) => {
+        const now = Date.now();
+        if (now - lastClickTime < CLICK_COOLDOWN) return;
+        lastClickTime = now;
+
+        const isInteractive = e.target.closest('button, input, textarea, a');
+        const isMusicControl = e.target.closest('.music-control');
+        
+        if (!isInteractive && !isMusicControl && currentPage < pages.length - 1) {
+            handleNavigation('down');
+        }
+    });
+
+    // 移动端触摸处理
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    });
+
+    window.addEventListener('touchend', (e) => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const diff = touchEndY - touchStartY;
+        const isMusicControl = e.target.closest('.music-control');
+        
+        if (!isMusicControl && Math.abs(diff) > SWIPE_THRESHOLD) {
+            const direction = diff > 0 ? 'up' : 'down';
+            handleNavigation(direction);
+        }
+    });
+
+    // 页面控制核心逻辑
     const updateIndicator = () => {
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentPage);
@@ -75,41 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pages[currentPage].classList.add('animate');
         }, 300);
 
-        if(currentPage >= 1 && !isMusicPlaying) {
-            toggleMusic();
-        }
-
         updateIndicator();
     };
-
-    // 事件监听
-    let touchStartY = 0;
-    
-    window.addEventListener('wheel', (e) => {
-        if (!isScrolling) {
-            isScrolling = true;
-            const direction = e.deltaY > 0 ? 'down' : 'up';
-            handleNavigation(direction);
-            setTimeout(() => isScrolling = false, 800);
-        }
-    });
-
-    window.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    });
-
-    window.addEventListener('touchend', (e) => {
-        const touchEndY = e.changedTouches[0].clientY;
-        const diff = touchEndY - touchStartY;
-        if(Math.abs(diff) > 50) {
-            const direction = diff > 0 ? 'up' : 'down';
-            handleNavigation(direction);
-        }
-    });
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => index !== currentPage && switchPage(index));
-    });
 
     const handleNavigation = (direction) => {
         let newPage = currentPage;
@@ -122,7 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const initPages = () => {
         pages[0].classList.add('active');
         updateIndicator();
-        document.body.addEventListener('click', () => handleNavigation('down'));
+        // 添加移动端保护层
+        const shield = document.createElement('div');
+        shield.className = 'click-shield';
+        document.body.appendChild(shield);
     };
 
     // 错误处理
