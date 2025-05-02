@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dots = document.querySelectorAll('.page-dot');
     const resources = [
         'images/boat.png',
-        'images/gift.png',
-        'audio/bgm.mp3'
+        'images/gift.png'
     ];
 
     // 预加载系统
