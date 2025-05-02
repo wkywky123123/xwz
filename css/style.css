@@ -47,6 +47,7 @@ body {
     background: #f0f9ff;
 }
 
+/* 页面容器 */
 .page-container {
     width: 100vw;
     height: 100vh;
@@ -56,6 +57,7 @@ body {
     overflow: hidden;
 }
 
+/* 页面通用样式 */
 .page {
     width: 100%;
     height: 100%;
@@ -76,6 +78,9 @@ body {
     max-width: 600px;
     width: 90%;
     text-align: center;
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
 }
 
 /* 翻页动画 */
@@ -132,19 +137,10 @@ body {
     font-size: 1.3em;
 }
 
-.emphasis {
-    font-weight: bold;
-}
-
-.rainbow {
-    animation: rainbow 2s infinite;
-}
-
-@keyframes rainbow {
-    0% { color: #ff6b6b; }
-    33% { color: #4ecdc4; }
-    66% { color: #ffe66d; }
-    100% { color: #ff6b6b; }
+.small-text {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 10px;
 }
 
 /* 图片动画 */
@@ -165,7 +161,7 @@ body {
     }
 }
 
-/* 最终页 */
+/* 最终页样式 */
 .birthday-text {
     font-size: 2.5em;
     color: #ff6b6b;
@@ -214,7 +210,7 @@ body {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 1000;
+    z-index: 1001;
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid #ff6b6b;
     border-radius: 25px;
@@ -226,6 +222,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    pointer-events: auto;
 }
 
 .music-control:hover {
@@ -250,38 +247,15 @@ body {
     100% { transform: scale(0.8); }
 }
 
-/* 特色文字效果 */
-.scroll-text p {
-  animation: scrollUp 8s infinite;
-  opacity: 0;
-}
-
-@keyframes scrollUp {
-  0% { transform: translateY(30px); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(-30px); opacity: 0; }
-}
-
-.jump {
-  display: inline-block;
-  animation: jump 0.8s ease infinite alternate;
-}
-
-@keyframes jump {
-  to { transform: translateY(-15px); }
-}
-
-.bless-bubble {
-  background: rgba(255,255,255,0.9);
-  padding: 15px;
-  border-radius: 15px;
-  margin: 10px 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.small-text {
-  font-size: 0.8em;
-  color: #666;
-  margin-top: 10px;
+/* 移动端保护层 */
+@media (max-width: 768px) {
+    .click-shield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        pointer-events: none;
+    }
 }
