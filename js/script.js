@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     const progress = document.querySelector('.progress');
     const preloader = document.getElementById('preloader');
+    const startButton = document.getElementById('start-button');
     const bgm = document.getElementById('bgm');
 
     let loaded = 0;
@@ -16,13 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
             loaded++;
             progress.style.width = (loaded / resources.length * 100) + '%';
             if (loaded === resources.length) {
-                // 进度条变成开始按钮
-                progress.innerHTML = '<button id="start-button">开始</button>';
-                progress.style.background = 'none';
-                progress.style.justifyContent = 'center';
-                progress.style.alignItems = 'center';
-                progress.style.height = 'auto';
-                progress.style.borderRadius = '0';
+                // 隐藏进度条，显示开始按钮
+                document.querySelector('.progress-bar').style.display = 'none';
+                document.getElementById('preload-title').style.display = 'none';
+                document.querySelector('#preloader p').style.display = 'none';
+                startButton.classList.remove('hidden');
             }
         };
         res.onerror = () => {
@@ -31,12 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`资源加载失败: ${url}, 请刷新页面 (＞人＜;)`);
             progress.style.width = (loaded / resources.length * 100) + '%';
             if (loaded === resources.length) {
-                progress.innerHTML = '<button id="start-button">开始</button>';
-                progress.style.background = 'none';
-                progress.style.justifyContent = 'center';
-                progress.style.alignItems = 'center';
-                progress.style.height = 'auto';
-                progress.style.borderRadius = '0';
+                // 隐藏进度条，显示开始按钮
+                document.querySelector('.progress-bar').style.display = 'none';
+                document.getElementById('preload-title').style.display = 'none';
+                document.querySelector('#preloader p').style.display = 'none';
+                startButton.classList.remove('hidden');
             }
         };
         res.src = url;
@@ -95,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 开始按钮点击事件
-    document.getElementById('start-button').addEventListener('click', function() {
+    startButton.addEventListener('click', function() {
         preloader.style.opacity = '0';
         setTimeout(() => {
             preloader.remove();
