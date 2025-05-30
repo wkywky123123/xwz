@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 预加载系统
     const resources = [
         'images/boat.png',
-        'images/gift.png'
+        'images/gift.png',
+        'audio/bgm.mp3'
     ];
     const progress = document.querySelector('.progress');
     const preloader = document.getElementById('preloader');
@@ -17,10 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loaded++;
             progress.style.width = (loaded / resources.length * 100) + '%';
             if (loaded === resources.length) {
-                // 隐藏进度条，显示开始按钮
+                // 隐藏进度条，但保留大标题和其他内容
                 document.querySelector('.progress-bar').style.display = 'none';
-                document.getElementById('preload-title').style.display = 'none';
-                document.querySelector('#preloader p').style.display = 'none';
                 startButton.classList.remove('hidden');
             }
         };
@@ -30,10 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`资源加载失败: ${url}, 请刷新页面 (＞人＜;)`);
             progress.style.width = (loaded / resources.length * 100) + '%';
             if (loaded === resources.length) {
-                // 隐藏进度条，显示开始按钮
+                // 隐藏进度条，但保留大标题和其他内容
                 document.querySelector('.progress-bar').style.display = 'none';
-                document.getElementById('preload-title').style.display = 'none';
-                document.querySelector('#preloader p').style.display = 'none';
                 startButton.classList.remove('hidden');
             }
         };
@@ -98,6 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             preloader.remove();
             pages[0].classList.add('active');
+            // 点击开始按钮后立即播放音乐
+            bgm.play().catch(error => {
+                console.error('音频播放失败:', error);
+                alert('音频播放失败，请检查网络连接或刷新页面 (＞人＜;)');
+            });
+            document.getElementById('audio-control').textContent = '暂停';
+            isMusicPlaying = true;
         }, 500);
     });
 
