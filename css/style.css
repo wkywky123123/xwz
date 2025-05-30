@@ -38,7 +38,7 @@
     transition: width 0.3s;
     border-radius: 6px;
 }
-#preloader p {
+#preload-text {
     color: #666;
     font-family: 'Comic Sans MS', cursive;
     margin-bottom: 20px;
