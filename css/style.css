@@ -11,7 +11,19 @@
     justify-content: center;
     align-items: center;
     transition: opacity 0.5s;
+}
+.preloader-content {
+    text-align: center;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#preload-title {
+    color: #ff6b6b;
+    font-family: 'Comic Sans MS', cursive;
+    margin-bottom: 20px;
+    font-size: 2em;
 }
 .progress-bar {
     width: 70%;
@@ -27,14 +39,27 @@
     transition: width 0.3s;
     border-radius: 6px;
 }
-#preloader h1 {
-    color: #ff6b6b;
-    font-family: 'Comic Sans MS', cursive;
-    margin-bottom: 10px;
-}
 #preloader p {
     color: #666;
     font-family: 'Comic Sans MS', cursive;
+    margin-bottom: 20px;
+}
+#start-button {
+    padding: 10px 20px;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Comic Sans MS', cursive;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+}
+#start-button:hover {
+    background: #ff5252;
+}
+.hidden {
+    display: none;
 }
 
 /* 基础样式 */
@@ -63,20 +88,6 @@ body {
     box-sizing: border-box;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
-}
-#start-button {
-    padding: 10px 20px;
-    background: #ff6b6b;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    font-family: 'Comic Sans MS', cursive;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background 0.3s ease;
-}
-#start-button:hover {
-    background: #ff5252;
 }
 
 /* 内容容器 */
