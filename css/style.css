@@ -5,12 +5,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff5f5;
+    background: linear-gradient(135deg, #fff5f5, #ffd7e0);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .preloader-content {
     text-align: center;
     display: flex;
@@ -18,45 +19,57 @@
     align-items: center;
     justify-content: center;
 }
+
 #preload-title {
-    color: #ff6b6b;
+    color: #ff3b30;
     font-family: 'Comic Sans MS', cursive;
-    margin-bottom: 20px;
-    font-size: 2em;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.3);
 }
+
 .progress-bar {
-    width: 70%;
-    height: 12px;
+    width: 80%;
+    height: 15px;
     background: #ffe6e6;
-    border-radius: 6px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .progress {
     width: 0%;
     height: 100%;
-    background: #ff6b6b;
-    transition: width 0.3s;
-    border-radius: 6px;
+    background: #ff3b30;
+    transition: width 0.5s ease;
+    border-radius: 10px;
 }
+
 #preload-text {
     color: #666;
     font-family: 'Comic Sans MS', cursive;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 1.2em;
 }
+
 #start-button {
-    padding: 10px 20px;
-    background: #ff6b6b;
+    padding: 15px 30px;
+    background: #ff3b30;
     border: none;
-    border-radius: 20px;
+    border-radius: 30px;
     color: white;
     font-family: 'Comic Sans MS', cursive;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 1.2em;
     transition: background 0.3s ease;
+    box-shadow: 0 3px 8px rgba(255, 0, 0, 0.3);
 }
+
 #start-button:hover {
-    background: #ff5252;
+    background: #ff1a1a;
+    box-shadow: 0 5px 12px rgba(255, 0, 0, 0.5);
 }
+
 .hidden {
     display: none;
 }
@@ -66,16 +79,19 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: 'Comic Sans MS', cursive;
-    background-color: #fff5f5; /* 设置默认背景色 */
+    background-color: #fff5f5;
+    background: linear-gradient(135deg, #fff5f5, #f0f9ff);
 }
+
 .page-container {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    overflow: visible; /* 确保内容不会被裁剪 */
+    overflow: visible;
 }
+
 .page {
     width: 100%;
     height: 100%;
@@ -84,12 +100,14 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    padding: 20px;
+    padding: 40px;
     box-sizing: border-box;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
-    color: #333; /* 确保文字颜色足够深 */
-    z-index: 1; /* 确保页面内容在正常层级 */
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: #333;
+    z-index: 1;
 }
 
 /* 内容容器 */
@@ -97,101 +115,120 @@ body {
     max-width: 600px;
     width: 90%;
     text-align: center;
-    z-index: 2; /* 确保内容在页面顶层 */
+    z-index: 2;
 }
 
 /* 翻页动画 */
-.page:not(.active) { transform: translateY(100%); }
-.page.active { transform: translateY(0); }
-.page.exit { transform: translateY(-100%); }
+.page:not(.active) {
+    transform: translateY(100%);
+}
+
+.page.active {
+    transform: translateY(0);
+}
+
+.page.exit {
+    transform: translateY(-100%);
+}
 
 /* 第一页样式 */
-#page1 { opacity: 0; }
+#page1 {
+    opacity: 0;
+}
+
 #page1.active {
     animation: pageFadeIn 1s ease-out forwards;
 }
-@keyframes pageFadeIn {
-    to { opacity: 1; }
-}
 
-/* 文字动画 */
-.text-line {
-    opacity: 0;
-    transform: translateX(-50px);
-    margin: 10px 0;
-}
-.text-line:nth-child(even) {
-    transform: translateX(50px);
-}
-.animate .text-line {
-    animation: textSlideIn 0.8s ease-out forwards;
-}
-@keyframes textSlideIn {
+@keyframes pageFadeIn {
     to {
         opacity: 1;
-        transform: translateX(0);
     }
 }
 
-/* 特殊样式 */
-.highlight {
-    color: #ff6b6b;
-    font-size: 1.3em;
-}
-.emphasis {
-    font-weight: bold;
-}
-
-/* 图片动画 */
+/* 图片样式 */
 .falling-img {
-    width: min(150px, 30vw);
-    margin: 20px 0;
-    animation: floatIn 2s ease-out forwards;
-}
-@keyframes floatIn {
-    from { transform: translateX(100vw) rotate(15deg); opacity: 0; }
-    to { transform: translateX(0) rotate(0); opacity: 1; }
+    width: 200px;
+    animation: fall 2s ease-in-out infinite;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
 }
 
-/* 最终页 */
-.birthday-text {
-    font-size: 2.5em;
-    color: #ff6b6b;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+@keyframes fall {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(30px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
-#signature {
-    position: absolute;
+
+/* 强调文字样式 */
+.highlight {
+    color: #ff3b30;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(255, 0, 0, 0.5);
+}
+
+.emphasis {
+    color: #007bff;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 255, 0.5);
+}
+
+/* 音乐控制按钮样式 */
+#audio - control {
+    position: fixed;
     bottom: 20px;
     right: 20px;
-    color: #666;
-    font-size: 1.1em;
-}
-
-/* 控制按钮样式 */
-#prev-page, #next-page, #audio-control {
-    position: absolute;
-    padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    background: #ff3b30;
     border: none;
     border-radius: 20px;
-    color: #ff6b6b;
+    color: white;
     font-family: 'Comic Sans MS', cursive;
     cursor: pointer;
+    font-size: 1em;
     transition: background 0.3s ease;
-    z-index: 100;
+    box-shadow: 0 3px 8px rgba(255, 0, 0, 0.3);
 }
-#prev-page {
-    top: 20px;
+
+#audio - control:hover {
+    background: #ff1a1a;
+    box-shadow: 0 5px 12px rgba(255, 0, 0, 0.5);
+}
+
+/* 翻页按钮样式 */
+#prev - page,
+#next - page {
+    position: fixed;
+    bottom: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Comic Sans MS', cursive;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 255, 0.3);
+}
+
+#prev - page {
     left: 20px;
 }
-#next-page {
-    top: 20px;
+
+#next - page {
     right: 20px;
 }
-#audio-control {
-    top: 20px;
-    right: 100px;
-}
-#prev-page:hover, #next-page:hover, #audio-control:hover {
-    background: rgba(255, 255, 255, 0.9);
+
+#prev - page:hover,
+#next - page:hover {
+    background: #0056b3;
+    box-shadow: 0 5px 12px rgba(0, 0, 255, 0.5);
 }
