@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
     <title>小雯子生日🎂快乐！🎉</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- 预加载 -->
     <div id="preloader">
-        <h1>小雯子OS 更新</h1>
         <div class="progress-bar">
             <div class="progress"></div>
+            <h1>小雯子OS 更新</h1>
+            <p>正在更新小雯子OS......</p>
         </div>
-        <p id="preloader-text">正在更新小雯子的OS......</p>
-        <button id="start-btn" style="display:none;">开始</button>
     </div>
 
     <!-- 页面容器 -->
     <div class="page-container">
+        <!-- 第1页 -->
         <div class="page" id="page1">
             <div class="content">
                 <h2>祝贺葛静雯同学！</h2>
@@ -35,24 +35,27 @@
             </div>
         </div>
 
+        <!-- 第2页 -->
         <div class="page" id="page2">
             <div class="content">
                 <p class="text-line">对了对了！</p>
                 <p class="text-line">这个【永远不会翻的小船】送给你</p>
-                <img src="images/boat.png" class="falling-img" />
+                <img src="images/boat.png" class="falling-img">
                 <p class="text-line highlight">我们两个的🚢也永远不会翻！</p>
             </div>
         </div>
 
+        <!-- 第3页 -->
         <div class="page" id="page3">
             <div class="content">
                 <p class="text-line">还有这个</p>
-                <img src="images/gift.png" class="falling-img" />
+                <img src="images/gift.png" class="falling-img">
                 <p class="text-line">哪怕考不上也可以带着过过瘾嘛</p>
                 <p class="text-line">据说带着考试会有分数加成哦~</p>
             </div>
         </div>
 
+        <!-- 第4页 -->
         <div class="page" id="page4">
             <div class="content">
                 <p class="text-line">马上就要高考了</p>
@@ -62,14 +65,16 @@
             </div>
         </div>
 
+        <!-- 第5页 -->
         <div class="page" id="page5">
-            <div class="content">
+            <div class='content'>
                 <p class="text-line">最后</p>
                 <p class="text-line">祝你永远都这么</p>
                 <p class="text-line highlight">漂亮 可爱 温柔 善良......</p>
             </div>
         </div>
-
+        
+        <!-- 第6页 -->
         <div class="page" id="page6">
             <div class="content">
                 <div class="birthday-text">🎂生日快乐！🎉</div>
@@ -79,12 +84,16 @@
     </div>
 
     <!-- 背景音乐 -->
-    <audio id="bgm" loop>
-        <source src="audio/bgm.mp3" type="audio/mpeg" />
+    <audio id="bgm">
+        <source src="audio/bgm.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 音乐控制按钮 -->
-    <button id="musicToggle" title="播放/暂停音乐">🔈</button>
+    <!-- 音乐播放控制按钮 -->
+    <button id="audio-control">播放/暂停</button>
+
+    <!-- 翻页控制按钮 -->
+    <button id="prev-page">上一页</button>
+    <button id="next-page">下一页</button>
 
     <script src="js/script.js"></script>
 </body>
