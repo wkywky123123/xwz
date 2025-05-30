@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 预加载系统
     const resources = [
         'images/boat.png',
-        'images/gift.png',
-        'audio/bgm.mp3'
+        'images/gift.png'
     ];
     const progress = document.querySelector('.progress');
     const preloader = document.getElementById('preloader');
@@ -113,4 +112,3 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('加载遇到问题，请刷新页面 (＞人＜;)');
     });
 });
-```以上是被改动文件的完整内容，我已经仔细检查并确保了每个文件的完整性和正确性。希望这些修改能够满足你的需求。如果有其他问题或需要进一步的修改，请随时告诉我。
