@@ -8,26 +8,18 @@
     background: #fff5f5;
     z-index: 9999;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     transition: opacity 0.5s;
+    flex-direction: column;
 }
-
-#preloader h1 {
-    font-size: 3em;
-    color: #ff6b6b;
-    margin-bottom: 30px;
-}
-
 .progress-bar {
     width: 70%;
     height: 12px;
     background: #ffe6e6;
     border-radius: 6px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
-
 .progress {
     width: 0%;
     height: 100%;
@@ -35,43 +27,157 @@
     transition: width 0.3s;
     border-radius: 6px;
 }
-
-#start-btn {
-    padding: 10px 30px;
-    font-size: 1.3em;
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(255, 107, 107, 0.7);
-    transition: background 0.3s;
+#preloader h1 {
+    color: #ff6b6b;
+    font-family: 'Comic Sans MS', cursive;
+    margin-bottom: 10px;
+}
+#preloader p {
+    color: #666;
+    font-family: 'Comic Sans MS', cursive;
 }
 
-#start-btn:hover {
-    background: #ff4b4b;
+/* 基础样式 */
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive;
 }
-
-/* 音乐控制按钮 */
-#musicToggle {
+.page-container {
+    width: 100vw;
+    height: 100vh;
     position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
+}
+#start-button {
+    padding: 10px 20px;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Comic Sans MS', cursive;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+}
+#start-button:hover {
+    background: #ff5252;
+}
+
+/* 内容容器 */
+.content {
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
+
+/* 翻页动画 */
+.page:not(.active) { transform: translateY(100%); }
+.page.active { transform: translateY(0); }
+.page.exit { transform: translateY(-100%); }
+
+/* 第一页样式 */
+#page1 { opacity: 0; }
+#page1.active {
+    animation: pageFadeIn 1s ease-out forwards;
+}
+@keyframes pageFadeIn {
+    to { opacity: 1; }
+}
+
+/* 文字动画 */
+.text-line {
+    opacity: 0;
+    transform: translateX(-50px);
+    margin: 10px 0;
+}
+.text-line:nth-child(even) {
+    transform: translateX(50px);
+}
+.animate .text-line {
+    animation: textSlideIn 0.8s ease-out forwards;
+}
+@keyframes textSlideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 特殊样式 */
+.highlight {
+    color: #ff6b6b;
+    font-size: 1.3em;
+}
+.emphasis {
+    font-weight: bold;
+}
+
+/* 图片动画 */
+.falling-img {
+    width: min(150px, 30vw);
+    margin: 20px 0;
+    animation: floatIn 2s ease-out forwards;
+}
+@keyframes floatIn {
+    from { transform: translateX(100vw) rotate(15deg); opacity: 0; }
+    to { transform: translateX(0) rotate(0); opacity: 1; }
+}
+
+/* 最终页 */
+.birthday-text {
+    font-size: 2.5em;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+#signature {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* 控制按钮样式 */
+#prev-page, #next-page, #audio-control {
+    position: absolute;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 20px;
+    color: #ff6b6b;
+    font-family: 'Comic Sans MS', cursive;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    z-index: 100;
+}
+#prev-page {
+    top: 20px;
+    left: 20px;
+}
+#next-page {
     top: 20px;
     right: 20px;
-    background: #ffe6e6;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.5em;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(255, 107, 107, 0.7);
-    transition: background 0.3s;
-    z-index: 10000;
 }
-
-#musicToggle:hover {
-    background: #ff6b6b;
-    color: white;
+#audio-control {
+    top: 20px;
+    right: 100px;
 }
-
-/* 保留你之前所有的其他样式... */
+#prev-page:hover, #next-page:hover, #audio-control:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
