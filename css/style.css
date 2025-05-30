@@ -66,6 +66,7 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: 'Comic Sans MS', cursive;
+    background-color: #fff5f5; /* 设置默认背景色 */
 }
 .page-container {
     width: 100vw;
@@ -73,7 +74,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    overflow: visible; /* 修改此处，确保内容不会被裁剪 */
+    overflow: visible; /* 确保内容不会被裁剪 */
 }
 .page {
     width: 100%;
@@ -87,7 +88,7 @@ body {
     box-sizing: border-box;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
-    color: #333;
+    color: #333; /* 确保文字颜色足够深 */
     z-index: 1; /* 确保页面内容在正常层级 */
 }
 
