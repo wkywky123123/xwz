@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 预加载系统
     const resources = [
         'images/boat.png',
-        'images/gift.png',
-        'audio/bgm.mp3'
+        'images/gift.png'
     ];
     const progress = document.querySelector('.progress');
     const preloader = document.getElementById('preloader');
