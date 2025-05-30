@@ -73,7 +73,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    overflow: hidden;
+    overflow: visible; /* 修改此处，确保内容不会被裁剪 */
 }
 .page {
     width: 100%;
@@ -87,6 +87,8 @@ body {
     box-sizing: border-box;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
+    color: #333;
+    z-index: 1; /* 确保页面内容在正常层级 */
 }
 
 /* 内容容器 */
@@ -94,6 +96,7 @@ body {
     max-width: 600px;
     width: 90%;
     text-align: center;
+    z-index: 2; /* 确保内容在页面顶层 */
 }
 
 /* 翻页动画 */
