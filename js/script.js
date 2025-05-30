@@ -10,33 +10,61 @@ document.addEventListener("DOMContentLoaded", () => {
     const musicToggle = document.getElementById("musicToggle");
 
     let currentPageIndex = 0;
-    let loadingProgress = 0;
-    let loadingInterval;
+    let loadedCount = 0;
 
-    // 预加载模拟加载进度
-    function startLoading() {
-        loadingInterval = setInterval(() => {
-            loadingProgress += Math.random() * 10;
-            if (loadingProgress >= 100) {
-                loadingProgress = 100;
-                clearInterval(loadingInterval);
-                // 加载完成，隐藏进度条，显示开始按钮
-                progressBar.style.width = "100%";
-                showStartButton();
-            } else {
-                progressBar.style.width = loadingProgress + "%";
-            }
-        }, 300);
+    const resources = [
+        "images/boat.png",
+        "images/gift.png",
+        "audio/bgm.mp3",
+    ];
+
+    // 更新进度条
+    function updateProgress() {
+        const percent = (loadedCount / resources.length) * 100;
+        progressBar.style.width = percent + "%";
+        if (loadedCount === resources.length) {
+            showStartButton();
+        }
     }
 
+    // 真实预加载资源
+    resources.forEach((src) => {
+        const ext = src.split(".").pop().toLowerCase();
+        if (ext === "mp3" || ext === "wav") {
+            const audio = new Audio();
+            audio.src = src;
+            audio.addEventListener("canplaythrough", () => {
+                loadedCount++;
+                updateProgress();
+            });
+            audio.addEventListener("error", () => {
+                // 出错也算加载完成，防止卡死
+                loadedCount++;
+                updateProgress();
+            });
+        } else {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => {
+                loadedCount++;
+                updateProgress();
+            };
+            img.onerror = () => {
+                loadedCount++;
+                updateProgress();
+            };
+        }
+    });
+
+    // 显示开始按钮
     function showStartButton() {
-        progressBar.style.width = "0%";
+        progressBar.style.width = "100%";
         document.querySelector(".progress-bar").style.display = "none";
         preloaderText.style.display = "none";
         startBtn.style.display = "inline-block";
     }
 
-    // 点击开始按钮后，隐藏预加载，显示第一页，播放音乐
+    // 点击开始按钮，隐藏预加载，显示第一页，播放音乐
     startBtn.addEventListener("click", () => {
         preloader.style.opacity = 0;
         setTimeout(() => {
@@ -44,12 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
             pageContainer.style.display = "block";
             showPage(0);
             bgm.play().catch(() => {
-                // 可能浏览器自动播放受限，用户无操作可后续点击音乐按钮播放
+                // 自动播放失败，用户可用按钮控制
             });
         }, 600);
     });
 
-    // 页面显示函数
+    // 显示指定页面
     function showPage(index) {
         if (index < 0 || index >= pages.length) return;
         pages.forEach((page, i) => {
@@ -60,39 +88,43 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         pages[index].classList.add("active");
-        // 触发文字动画
-        setTimeout(() => {
-            pages[index].classList.add("animate");
-        }, 100);
         currentPageIndex = index;
+
+        // 文字动画处理
+        const textLines = pages[index].querySelectorAll(".text-line");
+        pages[index].classList.remove("animate");
+        void pages[index].offsetWidth; // 触发重绘
+        pages[index].classList.add("animate");
+
+        textLines.forEach((line, i) => {
+            line.style.animationDelay = `${i * 0.2}s`;
+        });
     }
 
-    // 上一页
+    // 页面上下翻页控制
+    function nextPage() {
+        if (currentPageIndex < pages.length - 1) {
+            showPage(currentPageIndex + 1);
+        }
+    }
     function prevPage() {
         if (currentPageIndex > 0) {
             showPage(currentPageIndex - 1);
         }
     }
 
-    // 下一页
-    function nextPage() {
-        if (currentPageIndex < pages.length - 1) {
-            showPage(currentPageIndex + 1);
-        }
-    }
-
-    // 点击页面上下部分翻页
+    // 页面点击控制：左右翻页或上下翻页，这里用上下翻页（点上半区上一页，下半区下一页）
     pageContainer.addEventListener("click", (e) => {
         const clickY = e.clientY;
-        const halfHeight = window.innerHeight / 2;
-        if (clickY < halfHeight) {
+        const screenHeight = window.innerHeight;
+        if (clickY < screenHeight / 2) {
             prevPage();
         } else {
             nextPage();
         }
     });
 
-    // 音乐播放/暂停控制
+    // 音乐播放控制按钮
     musicToggle.addEventListener("click", () => {
         if (bgm.paused) {
             bgm.play();
@@ -103,7 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 初始化，隐藏页面容器，开始加载
+    // 初始化页面隐藏状态
     pageContainer.style.display = "none";
-    startLoading();
+
+    // 错误捕获
+    window.addEventListener("error", (e) => {
+        console.error("资源加载失败:", e.filename);
+        alert("加载遇到问题，请刷新页面 (＞人＜;)");
+    });
 });
