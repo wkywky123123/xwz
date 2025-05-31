@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
     <title>小雯子生日🎂快乐！🎉</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- 预加载 -->
     <div id="preloader">
-        <div class="progress-bar">
-            <div class="progress"></div>
-            <p>正在加载属于小雯子的🎂祝福......</p>
+        <div class="preloader-content">
+            <h1 id="preload-title">小雯子OS更新</h1>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <p id="preload-text">正在更新小雯子OS......</p>
+            <button id="start-button" class="hidden">更新完成！</button>
         </div>
     </div>
 
@@ -25,11 +29,11 @@
                 <p>您已在2025.6.1成功升级至v18.0版本！</p>
                 <p>更新内容：</p>
                 <ul>
-                    <li>✔️ 熬夜不掉发技能+20%</li>
-                    <li>✔️ 食堂抢饭速度MAX</li>
-                    <li>✔️ 自动屏蔽老师唠叨模式（Beta）</li>
-                    <li>✔️ 赠送成年的世界门票一张</li>
-                    <li>✔️ 好朋友们的祝福＆礼物🎁*n</li>
+                    <li>💇♀️ 新增「熬夜不掉发」核心科技（专利号：WZMUA-0520）</li>
+                    <li>🏃♀️ 强化「食堂抢饭速度MAX」被动技能</li>
+                    <li>🎧 「自动屏蔽唠叨」模式（Beta测试中）</li>
+                    <li>🎫 解锁「成年人世界」终身通行证</li>
+                    <li>🎁 预装「好友祝福」扩展包</li>
                 </ul>
             </div>
         </div>
@@ -86,6 +90,13 @@
     <audio id="bgm">
         <source src="audio/bgm.mp3" type="audio/mpeg">
     </audio>
+
+    <!-- 音乐播放控制按钮 -->
+    <button id="audio-control">播放/暂停</button>
+
+    <!-- 翻页控制按钮 -->
+    <button id="prev-page">上一页</button>
+    <button id="next-page">下一页</button>
 
     <script src="js/script.js"></script>
 </body>
