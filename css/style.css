@@ -73,7 +73,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    overflow: visible; /* 修改此处，确保内容不会被裁剪 */
+    overflow: visible; /* 确保内容不会被裁剪 */
 }
 .page {
     width: 100%;
@@ -85,10 +85,11 @@ body {
     position: absolute;
     padding: 20px;
     box-sizing: border-box;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     background: linear-gradient(135deg, #fff5f5 30%, #f0f9ff 100%);
     color: #333;
-    z-index: 1; /* 确保页面内容在正常层级 */
+    z-index: 1;
+    /* 统一的过渡效果 */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out;
 }
 
 /* 内容容器 */
@@ -96,22 +97,42 @@ body {
     max-width: 600px;
     width: 90%;
     text-align: center;
-    z-index: 2; /* 确保内容在页面顶层 */
+    z-index: 2;
 }
 
-/* 翻页动画 */
-.page:not(.active) { transform: translateY(100%); }
-.page.active { transform: translateY(0); }
-.page.exit { transform: translateY(-100%); }
+/* 翻页动画状态 */
+.page:not(.active) {
+    transform: translateY(100%); /* 非活动页默认在屏幕下方 */
+    opacity: 0; /* 非活动页默认透明，滑入时会通过 .active 的 opacity: 1 渐变 */
+}
 
-/* 第一页样式 */
-#page1 { opacity: 0; }
+/* Page 1 特殊处理：初始位置和激活效果 */
+#page1:not(.active) {
+    transform: translateY(0) !important; /* 强制 page1 始终在 Y 轴 0 的位置 */
+    opacity: 0 !important; /* 非激活的 page1 是透明的 */
+}
 #page1.active {
-    animation: pageFadeIn 1s ease-out forwards;
+    transform: translateY(0) !important; /* 确保激活时也在原位 */
+    animation: pageFadeIn 1s ease-out forwards; /* 使用自定义淡入动画 */
+    /* opacity: 1;  由 pageFadeIn 动画处理 */
 }
 @keyframes pageFadeIn {
+    from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* 通用激活状态 */
+.page.active {
+    transform: translateY(0); /* 活动页面滑到中间 */
+    opacity: 1; /* 活动页面完全可见 */
+}
+
+/* 通用退出状态 */
+.page.exit {
+    transform: translateY(-100%); /* 退出的页面向上滑走 */
+    opacity: 0; /* 同时淡出 */
+}
+
 
 /* 文字动画 */
 .text-line {
@@ -189,7 +210,7 @@ body {
 }
 #audio-control {
     top: 20px;
-    right: 100px;
+    right: 100px; /* 根据按钮数量和间距调整，确保不和 next-page 重叠 */
 }
 #prev-page:hover, #next-page:hover, #audio-control:hover {
     background: rgba(255, 255, 255, 0.9);
